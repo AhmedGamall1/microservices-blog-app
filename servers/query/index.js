@@ -47,12 +47,12 @@ app.post("/events", (req, res) => {
 app.listen(8002, async () => {
   console.log("Listening on 8002");
   try {
-    const res = await axios.get("http://localhost:8005/events");
+    const res = await axios.get("http://event-bus-srv:8005/events");
 
     for (let event of res.data) {
       console.log("Processing event:", event.type);
 
-      handleEvent(event.type, event.data);
+      handleEvents(event.type, event.data);
     }
   } catch (error) {
     console.log(error.message);

@@ -9,16 +9,16 @@ const events = [];
 app.post("/events", (req, res) => {
   const event = req.body;
   events.push(event);
-  axios.post("http://localhost:8000/events", event).catch((err) => {
+  axios.post("http://posts-clusterip-srv:8000/events", event).catch((err) => {
     console.log(err.message);
   });
-  axios.post("http://localhost:8001/events", event).catch((err) => {
+  axios.post("http://comments-srv:8001/events", event).catch((err) => {
     console.log(err.message);
   });
-  axios.post("http://localhost:8002/events", event).catch((err) => {
+  axios.post("http://query-srv:8002/events", event).catch((err) => {
     console.log(err.message);
   });
-  axios.post("http://localhost:8003/events", event).catch((err) => {
+  axios.post("http://moderation-srv:8003/events", event).catch((err) => {
     console.log(err.message);
   });
 

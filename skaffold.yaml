@@ -1,0 +1,62 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: blog
+
+deploy:
+  kubectl:
+    manifests:
+      - servers/infra/k8s/*
+
+build:
+  local:
+    push: false
+  artifacts:
+    - image: ahmedgamal32/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+    - image: ahmedgamal32/comments
+      context: servers/comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: ahmedgamal32/posts
+      context: servers/posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: ahmedgamal32/query
+      context: servers/query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: ahmedgamal32/event-bus
+      context: servers/event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: ahmedgamal32/moderation
+      context: servers/moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
